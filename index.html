@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Quiz for Ujjaval 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: rgba(20, 20, 30, 0.7);
+            --accent-pink: #ff006e;
+            --accent-purple: #8338ec;
+            --accent-blue: #3a86ff;
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8d1;
+            --success: #06ffa5;
+            --error: #ff006e;
+            --glow-pink: rgba(255, 0, 110, 0.5);
+            --glow-purple: rgba(131, 56, 236, 0.5);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg,
+                    var(--accent-purple) 0%,
+                    var(--accent-pink) 50%,
+                    var(--accent-blue) 100%);
+            opacity: 0.1;
+            z-index: -2;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(10px, 10px) scale(1.1);
+            }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-pink);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.6;
+            z-index: -1;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: translateY(-100vh) translateX(50px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Main container */
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glassmorphism card */
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px 30px;
+            box-shadow:
+                0 8px 32px 0 rgba(0, 0, 0, 0.37),
+                0 0 60px var(--glow-purple),
+                inset 0 0 40px rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    transparent,
+                    rgba(255, 0, 110, 0.1),
+                    transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        h1 {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+            line-height: 1.3;
+        }
+
+        /* Photo section */
+        .photo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .photo-frame {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--accent-pink);
+            box-shadow:
+                0 0 30px var(--glow-pink),
+                0 0 60px var(--glow-purple);
+            position: relative;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-frame .fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Progress and points */
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 500;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Question section */
+        .question-container {
+            position: relative;
+            z-index: 1;
+            min-height: 300px;
+        }
+
+        .question {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .question.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+            padding: 18px 25px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 20px var(--glow-pink);
+            transform: translateY(-2px);
+        }
+
+        .option-btn:focus {
+            outline: 2px solid var(--accent-pink);
+            outline-offset: 2px;
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .option-btn.selected {
+            border-color: var(--accent-pink);
+            background: rgba(255, 0, 110, 0.2);
+        }
+
+        .option-btn.correct {
+            border-color: var(--success);
+            background: rgba(6, 255, 165, 0.2);
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--error);
+            background: rgba(255, 0, 110, 0.2);
+        }
+
+        /* Feedback badge */
+        .feedback {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 15px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .feedback.show {
+            opacity: 1;
+            transform: scale(1);
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .feedback.correct {
+            color: var(--success);
+            text-shadow: 0 0 10px var(--success);
+        }
+
+        .feedback.incorrect {
+            color: var(--error);
+            text-shadow: 0 0 10px var(--error);
+        }
+
+        /* Next button */
+        .next-btn {
+            display: none;
+            margin: 20px auto 0;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 5px 20px var(--glow-pink);
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--glow-pink);
+        }
+
+        .next-btn.show {
+            display: block;
+        }
+
+        /* Results screen */
+        .results {
+            display: none;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .results.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .final-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .recap {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .recap-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recap-item:last-child {
+            border-bottom: none;
+        }
+
+        .recap-icon {
+            font-size: 1.5rem;
+        }
+
+        .recap-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        /* Valentine section */
+        .valentine-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .valentine-question {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            10%,
+            30% {
+                transform: scale(1.05);
+            }
+
+            20%,
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        .valentine-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            position: relative;
+            min-height: 60px;
+        }
+
+        .valentine-btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            color: white;
+            box-shadow: 0 5px 20px var(--glow-pink);
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 30px var(--glow-pink);
+        }
+
+        .no-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: absolute;
+            transition: all 0.2s ease;
+        }
+
+        .no-btn.shake {
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px) rotate(-5deg);
+            }
+
+            75% {
+                transform: translateX(10px) rotate(5deg);
+            }
+        }
+
+        .escape-status {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: var(--accent-pink);
+            min-height: 30px;
+        }
+
+        /* Celebration */
+        .celebration {
+            display: none;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .celebration.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .celebration-text {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: heartbeat 1s ease-in-out infinite;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-pink);
+            position: absolute;
+            animation: confettiFall 3s linear;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Retry button */
+        .retry-btn {
+            margin-top: 20px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 5px 20px var(--glow-purple);
+        }
+
+        .retry-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--glow-purple);
+        }
+
+        .retry-message {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .card {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+            }
+
+            .option-btn {
+                font-size: 1rem;
+                padding: 15px 20px;
+            }
+
+            .valentine-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .no-btn {
+                position: fixed;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating particles -->
+    <div class="particles-container"></div>
+
+    <div class="container">
+        <div class="card">
+            <h1>Let's see if you can be my valentine, Ujjaval</h1>
+
+            <!-- Photo section -->
+            <div class="photo-container">
+                <div class="photo-frame">
+                    <img src="ujjaval.png" alt="Ujjaval"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="fallback" style="display: none;">U</div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Progress</div>
+                    <div class="stat-value" id="progress">1 / 5</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Points</div>
+                    <div class="stat-value" id="points">0</div>
+                </div>
+            </div>
+
+            <!-- Questions -->
+            <div class="question-container" id="quiz-container">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+
+            <!-- Results -->
+            <div class="results" id="results">
+                <div class="final-score" id="final-score"></div>
+                <div class="recap" id="recap"></div>
+                <div id="result-action"></div>
+            </div>
+
+            <!-- Celebration -->
+            <div class="celebration" id="celebration">
+                <div class="celebration-text">YAY 💖</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz data
+        const questions = [
+            {
+                question: "What color was I wearing on our first date?",
+                options: ["White", "Off White"],
+                correct: 0
+            },
+            {
+                question: "What was the 1st dessert we had together?",
+                options: ["Marcel's mousse", "Chocolate Cake"],
+                correct: 1
+            },
+            {
+                question: "When did we 1st speak on call?",
+                options: ["12th May", "13th May"],
+                correct: 0
+            },
+            {
+                question: "What is my favourite word?",
+                options: ["Kya Hai", "Kharab ho tum"],
+                correct: 0
+            },
+            {
+                question: "What is my favourite part of the day?",
+                options: ["Morning chai", "Night Video Call"],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = [];
+
+        // Initialize particles
+        function createParticles() {
+            const container = document.querySelector('.particles-container');
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+
+                // Random colors
+                const colors = ['#ff006e', '#8338ec', '#3a86ff', '#06ffa5'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+                container.appendChild(particle);
+            }
+        }
+
+        // Render question
+        function renderQuestion(index) {
+            const container = document.getElementById('quiz-container');
+            const q = questions[index];
+
+            container.innerHTML = `
+                <div class="question active">
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <button class="option-btn" data-index="${i}" aria-label="Option ${String.fromCharCode(65 + i)}: ${opt}">
+                                ${String.fromCharCode(65 + i)}. ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedback"></div>
+                    <button class="next-btn" id="next-btn">Next</button>
+                </div>
+            `;
+
+            // Add event listeners
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', () => selectAnswer(btn));
+            });
+
+            document.getElementById('next-btn').addEventListener('click', nextQuestion);
+
+            // Update progress
+            document.getElementById('progress').textContent = `${index + 1} / 5`;
+        }
+
+        // Select answer
+        function selectAnswer(btn) {
+            const selectedIndex = parseInt(btn.dataset.index);
+            const correctIndex = questions[currentQuestion].correct;
+            const isCorrect = selectedIndex === correctIndex;
+
+            // Store answer
+            userAnswers.push({
+                question: questions[currentQuestion].question,
+                selected: selectedIndex,
+                correct: correctIndex,
+                isCorrect: isCorrect
+            });
+
+            // Disable all buttons
+            document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+            // Mark selected
+            btn.classList.add('selected');
+
+            // Show correct/incorrect
+            if (isCorrect) {
+                btn.classList.add('correct');
+                score += 50;
+                showFeedback(true);
+            } else {
+                btn.classList.add('incorrect');
+                // Also highlight correct answer
+                document.querySelectorAll('.option-btn')[correctIndex].classList.add('correct');
+                showFeedback(false);
+            }
+
+            // Update points
+            document.getElementById('points').textContent = score;
+
+            // Auto-advance after 900ms
+            setTimeout(() => {
+                if (currentQuestion < questions.length - 1) {
+                    nextQuestion();
+                } else {
+                    showResults();
+                }
+            }, 900);
+        }
+
+        // Show feedback
+        function showFeedback(isCorrect) {
+            const feedback = document.getElementById('feedback');
+            feedback.className = 'feedback show ' + (isCorrect ? 'correct' : 'incorrect');
+            feedback.textContent = isCorrect ? 'Correct +50' : 'Incorrect +0';
+        }
+
+        // Next question
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                renderQuestion(currentQuestion);
+            } else {
+                showResults();
+            }
+        }
+
+        // Show results
+        function showResults() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('results').classList.add('active');
+
+            // Final score
+            document.getElementById('final-score').textContent = `Final Score: ${score} / 250`;
+
+            // Recap
+            const recap = document.getElementById('recap');
+            recap.innerHTML = userAnswers.map((ans, i) => `
+                <div class="recap-item">
+                    <span class="recap-icon">${ans.isCorrect ? '✅' : '❌'}</span>
+                    <span class="recap-text">Q${i + 1}: ${ans.question}</span>
+                </div>
+            `).join('');
+
+            // Result action
+            const resultAction = document.getElementById('result-action');
+
+            if (score === 250) {
+                // Perfect score - show Valentine question
+                resultAction.innerHTML = `
+                    <div class="valentine-section">
+                        <div class="valentine-question">Will you be my Valentine?</div>
+                        <div class="valentine-buttons">
+                            <button class="valentine-btn yes-btn" id="yes-btn">Yes</button>
+                            <button class="valentine-btn no-btn" id="no-btn">No</button>
+                        </div>
+                        <div class="escape-status" id="escape-status"></div>
+                    </div>
+                `;
+
+                document.getElementById('yes-btn').addEventListener('click', celebrate);
+                setupNoButton();
+            } else {
+                // Not perfect - show retry
+                resultAction.innerHTML = `
+                    <div class="retry-message">Almost! Try again 😉</div>
+                    <button class="retry-btn" id="retry-btn">Restart Quiz</button>
+                `;
+
+                document.getElementById('retry-btn').addEventListener('click', restartQuiz);
+            }
+        }
+
+        // Setup No button behavior
+        function setupNoButton() {
+            const noBtn = document.getElementById('no-btn');
+            const yesBtn = document.getElementById('yes-btn');
+            const status = document.getElementById('escape-status');
+            const messages = ["Nice try 😌", "Nope!", "Wrong choice 😛", "Not happening!", "Try again 😏", "Nah 💅"];
+            let messageIndex = 0;
+
+            function moveNoButton() {
+                const card = document.querySelector('.card');
+                const cardRect = card.getBoundingClientRect();
+                const yesBtnRect = yesBtn.getBoundingClientRect();
+
+                let newX, newY;
+                let attempts = 0;
+                const maxAttempts = 50;
+
+                do {
+                    newX = Math.random() * (cardRect.width - 150);
+                    newY = Math.random() * 100 - 50;
+                    attempts++;
+                } while (attempts < maxAttempts &&
+                    Math.abs(newX - (yesBtnRect.left - cardRect.left)) < 200);
+
+                noBtn.style.left = newX + 'px';
+                noBtn.style.top = newY + 'px';
+
+                // Shake animation
+                noBtn.classList.add('shake');
+                setTimeout(() => noBtn.classList.remove('shake'), 300);
+
+                // Update status
+                status.textContent = messages[messageIndex % messages.length];
+                messageIndex++;
+            }
+
+            noBtn.addEventListener('mouseenter', moveNoButton);
+            noBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                moveNoButton();
+            });
+
+            // Touch support
+            noBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                moveNoButton();
+            });
+        }
+
+        // Celebrate
+        function celebrate() {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('celebration').classList.add('active');
+
+            // Update header text
+            document.querySelector('h1').textContent = 'Thank you for agreeing to be my FOREVER Valentine';
+
+            // Create confetti
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+
+                    const colors = ['#ff006e', '#8338ec', '#3a86ff', '#06ffa5', '#ffbe0b'];
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+                    document.querySelector('.card').appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // Restart quiz
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+
+            document.getElementById('quiz-container').style.display = 'block';
+            document.getElementById('results').classList.remove('active');
+            document.getElementById('celebration').classList.remove('active');
+            document.getElementById('points').textContent = '0';
+
+            renderQuestion(0);
+        }
+
+        // Initialize
+        createParticles();
+        renderQuestion(0);
+    </script>
+</body>
+
+</html>
